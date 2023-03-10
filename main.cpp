@@ -11,7 +11,12 @@ int main(void)
 {
 
 //GPIOA ->MODER |= 0x01<<2*5;   //A0 ALTER FUNCTION
-GPIO_own_1  led(5,'A');
+
+//GPIO_own_1  led(5,'A');	
+	
+GPIO_own_1  led;
+led.b_set_pinbus(5,'A');	
+
 led.b_MODER(0x01);	
 GPIOA-> ODR |= 	0X1 <<5;
 	

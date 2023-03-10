@@ -3,10 +3,10 @@
 #include <string>
 
 using namespace std;
-void set_bus(char bus);	
-//ggpp 
 
-GPIO_own_1::GPIO_own_1(int pin,char bus='B')   //constructor
+GPIO_own_1::GPIO_own_1(){}   //constructor
+
+void GPIO_own_1::b_set_pinbus(int pin,char bus='B')   //constructor
 {
 //concatenate bus GPIO
 		pin_GP=pin;
@@ -42,9 +42,6 @@ GPIO_own_1::GPIO_own_1(int pin,char bus='B')   //constructor
 		default:
 		this->bus_pin=GPIOB;	
 	}
-
-
-
 }
 
 void GPIO_own_1::b_MODER(int mod)
