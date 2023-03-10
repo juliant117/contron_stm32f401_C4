@@ -6,8 +6,8 @@ class GPIO_own_1{
 	public:
 	GPIO_own_1();
 	//GPIO_own_1(int pin,char bus);
-	
 	~GPIO_own_1();
+	
 	int pin_GP;
 	char bus_GP;
 	

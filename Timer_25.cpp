@@ -4,3 +4,91 @@
 
 using namespace std;
 
+Tim_own_25::Tim_own_25(){}
+	
+void Tim_own_25::T_set_b(int n_timmer){
+	//select timmer 2-5
+	switch(n_timmer)
+	{
+		case 2:
+		RCC->APB1ENR |= 0X1<<0;     //enable clock tim2
+		this->Timmer_n=TIM2;
+		break;
+		case 3:
+		RCC->APB1ENR |= 0X1<<1;			//enable clock tim3
+		this->Timmer_n=TIM3;
+		break;
+		case 4:
+		RCC->APB1ENR |= 0X1<<2;			//enable clock tim4
+		this->Timmer_n=TIM4;
+		break;
+		case 5:
+		RCC->APB1ENR |= 0X1<<3;			//enable clock tim5
+		this->Timmer_n=TIM5;
+		break;
+		default:
+		this->Timmer_n=TIM2;
+	}
+}
+void Tim_own_25::T_set_time(int time_n,bool per_freq,bool arr_psc)  
+//time   period s    frecuecy Hz
+//per_freq    0 period    frequency
+//arr_psc			calculate    0 psc    1 arr 
+{
+	int F_clock=8000000;   //frecuencia de reloj por defecto
+	if(per_freq)
+	{//period
+		time =time_n;
+	}
+	else
+	{//frequency
+		time =1/time_n;
+	}
+  if(arr_psc)
+	{	//arr default   //caculate psc
+		if (per_freq)
+		{ //period
+			arr_o=1999;  //1999 by default
+			psc_o=((2*F_clock*(time))/(2*arr_o-1))-1;
+		}
+		else
+		{ //frecueny
+			arr_o=1999;  //1999 by default
+			psc_o=((2*F_clock)/(2*arr_o-1)*(time))-1;
+		}
+	}
+	else
+	{	//psc default	//caculate arr
+		if (per_freq)
+		{ //period
+			psc_o=1999;  //1999 by default
+			arr_o=((2*F_clock*(time))/(2*psc_o-1))-1;
+		}
+		else
+		{ //frecueny
+			psc_o=1999;  //1999 by default
+			arr_o=((2*F_clock)/(2*psc_o-1)*(time))-1;
+		}
+	}
+	Timmer_n->ARR=arr_o;
+	Timmer_n->PSC=psc_o;
+}
+
+void  Tim_own_25::T_set_cnt(int cnt_in)
+{
+//
+Timmer_n->CNT=cnt_in;   
+}
+void Tim_own_25::T_set_cr1(int cr1_in)
+{
+//0 Counter enable
+//1 Update disable
+//
+	Timmer_n->CR1=0x1<<cr1_in;
+}
+//void Tim_own_25::T_set_egr(int egr_in)
+//{	
+////0 Update generation
+//	Timmer_n->EGR=0x1<<egr_in;
+//}
+
