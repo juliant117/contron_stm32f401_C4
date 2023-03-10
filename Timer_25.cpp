@@ -6,8 +6,10 @@ using namespace std;
 
 Tim_own_25::Tim_own_25(){}
 	
-void Tim_own_25::T_set_b(int n_timmer){
+void Tim_own_25::T_set_b(int n_timmer)
+{
 	//select timmer 2-5
+	bus_n=n_timmer;
 	switch(n_timmer)
 	{
 		case 2:
@@ -86,9 +88,27 @@ void Tim_own_25::T_set_cr1(int cr1_in)
 //
 	Timmer_n->CR1=0x1<<cr1_in;
 }
-//void Tim_own_25::T_set_egr(int egr_in)
-//{	
-////0 Update generation
-//	Timmer_n->EGR=0x1<<egr_in;
-//}
+
+void Tim_own_25::T_enab_int()
+{
+	int timer_n =bus_n;
+switch(timer_n)
+	{
+		case 2:
+		NVIC_EnableIRQ(TIM2_IRQn);  //enable timmer interrupt
+		break;
+		case 3:
+		NVIC_EnableIRQ(TIM3_IRQn);
+		break;
+		case 4:
+		NVIC_EnableIRQ(TIM4_IRQn);
+		break;
+		case 5:
+		NVIC_EnableIRQ(TIM5_IRQn);
+		break;
+		default:
+		NVIC_EnableIRQ(TIM2_IRQn);
+	}
+}
+
 
