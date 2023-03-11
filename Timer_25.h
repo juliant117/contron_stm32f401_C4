@@ -15,6 +15,7 @@ class Tim_own_25{
 	int cnt_o=0;
 	int bus_n;
 	TIM_TypeDef * Timmer_n;
+	int channel;
 	
 	void T_set_b(int timmer);
 	void T_set_time(int time_n,bool per_freq,bool arr_psc);
@@ -22,6 +23,7 @@ class Tim_own_25{
 	void T_set_cr1(int cr1_in);
 	void T_set_egr(int egr_in);
 	void T_enab_int();
+	void select_channel(int chan_in);
 };
 
 #endif

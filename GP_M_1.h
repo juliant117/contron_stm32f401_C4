@@ -18,6 +18,6 @@ class GPIO_own_1{
 	void b_OTYPER(int oty);
 	void b_OSPEEDR(int osped);
 	void b_PUPDR(int pup);
-	
+	void b_FRLH(int ALTFUNC);
 };
 #endif

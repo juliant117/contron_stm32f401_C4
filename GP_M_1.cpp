@@ -64,3 +64,14 @@ void GPIO_own_1::b_PUPDR(int pup)
 //PUPDR 	00: No pull-up, pull-down/ 01: Pull-up/ 10: Pull-down/ 11: Reserved/
 bus_pin -> PUPDR |= pup<<2*pin_GP;	
 }
+void GPIO_own_1::b_FRLH(int ALTFUNC)
+{//alternate functions just introduce alternate function
+	if((pin_GP>=0)&&(pin_GP<=7))
+	{
+		bus_pin-> AFR[0]|=ALTFUNC<<pin_GP;
+	}
+	else 
+	{
+		bus_pin-> AFR[1]|=ALTFUNC<<(pin_GP-8);
+	}
+}

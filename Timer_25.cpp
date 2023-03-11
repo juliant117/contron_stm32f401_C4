@@ -112,4 +112,9 @@ switch(timer_n)
 	}
 }
 
-
+void Tim_own_25::select_channel(int chan_in)
+{	//number of channel
+	channel=chan_in;
+	//number of channel
+	
+}

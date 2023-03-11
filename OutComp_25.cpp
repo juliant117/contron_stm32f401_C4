@@ -5,12 +5,12 @@
 
 OutComp_25 :: OutComp_25(){}
 	
-void OutComp_25 :: select_channel(int chan_in)
+void OutComp_25 :: set_outcomp()
 {
 	
-		switch (chan_in)
+		switch (channel)
 	{///Interrupt enable register
-		case 1:
+		case 1:		//: Capture/Compare 1 interrupt enable
 		Timmer_n->	DIER|=0x1<<1;
 		break;
 		case 2:

@@ -13,11 +13,12 @@ class Pwm_25:public Tim_own_25 ,public GPIO_own_1
 		Pwm_25();
 	 ~Pwm_25();
 	
+	//TIM_TypeDef * chann_n;
 	
 	//CCMR_TypeDef * channel_cmr;
 	//TIM_TypeDef * Timmer_n;
 	//
-	void select_channel(int chan_in);
-	
+	void set_pwm(); 				//set pwm at channel assigned
+	void set_duty(int duty);
 };
 #endif

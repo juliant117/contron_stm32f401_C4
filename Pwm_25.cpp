@@ -6,19 +6,17 @@
 using namespace std;
 
 Pwm_25 :: Pwm_25(){}
-	
-void Pwm_25 :: select_channel(int chan_in)
-	
+
+void Pwm_25 ::set_pwm()
 {
 	Timmer_n->EGR|=0x1<<0;
-	
-	//number of channel
-	switch(chan_in)
+	switch(channel)
 	{
 		case 1:
 		Timmer_n -> CCMR1|=0x3<<5;  //Output compare 1 mode   PWM mode 1 -
 		Timmer_n -> CCMR1|=0x1<<3;  //Output compare 1 preload enable
 		Timmer_n -> CCER |=0x1<<0;	//signal is output on the corresponding output pin
+		
 		break;
 		case 2:
 		Timmer_n -> CCMR1|=0x3<<13;  
@@ -40,4 +38,25 @@ void Pwm_25 :: select_channel(int chan_in)
 		Timmer_n -> CCMR1|=0x3<<5;  
 		Timmer_n -> CCMR1|=0x1<<3;
 	}
+}
+void Pwm_25 ::set_duty(int duty)
+{
+	switch(channel)
+	{
+		case 1:
+		Timmer_n->CCR1 =duty;
+		break;
+		case 2:
+		Timmer_n->CCR2 =duty;
+		break;
+		case 3:
+		Timmer_n->CCR3 =duty;
+		break;
+		case 4:
+		Timmer_n->CCR4 =duty;
+		break;
+		default:
+		Timmer_n->CCR1 =duty;
+	}
+		
 }
