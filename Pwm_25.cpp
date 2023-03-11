@@ -1,4 +1,3 @@
-#include "Timer_25.h"
 #include "Pwm_25.h"
 #include "stm32f4xx.h"
 
@@ -11,7 +10,7 @@ Pwm_25 :: Pwm_25(){}
 void Pwm_25 :: select_channel(int chan_in)
 	
 {
-	Timmer_n->EGR=0x1<<0;
+	Timmer_n->EGR|=0x1<<0;
 	
 	//number of channel
 	switch(chan_in)

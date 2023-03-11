@@ -92,6 +92,7 @@ void Tim_own_25::T_set_cr1(int cr1_in)
 void Tim_own_25::T_enab_int()
 {
 	int timer_n =bus_n;
+	Timmer_n-> DIER|=0x1;
 switch(timer_n)
 	{
 		case 2:

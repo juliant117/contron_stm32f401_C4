@@ -13,6 +13,7 @@ class Tim_own_25{
 	int arr_o;
 	int psc_o;
 	int cnt_o=0;
+	int bus_n;
 	TIM_TypeDef * Timmer_n;
 	
 	void T_set_b(int timmer);
@@ -20,10 +21,7 @@ class Tim_own_25{
 	void T_set_cnt(int cnt_in);
 	void T_set_cr1(int cr1_in);
 	void T_set_egr(int egr_in);
+	void T_enab_int();
 };
 
-class Pwm_own:Tim_own_25{
-	public:
-		
-};
 #endif
