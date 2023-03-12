@@ -2,10 +2,11 @@
 
 #ifndef GP_M_1_H
 #define GP_M_1_H
-class GPIO_own_1{
+
+class GPIO_own_1
+{
 	public:
 	GPIO_own_1();
-	//GPIO_own_1(int pin,char bus);
 	~GPIO_own_1();
 	
 	int pin_GP;

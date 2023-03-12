@@ -40,23 +40,25 @@ void Pwm_25 ::set_pwm()
 	}
 }
 void Pwm_25 ::set_duty(int duty)
-{
+{ //duty %   -> arr=100%
+	int duty_out;
+	duty_out=(arr_o*duty)/100;
 	switch(channel)
 	{
 		case 1:
-		Timmer_n->CCR1 =duty;
+		Timmer_n->CCR1 =duty_out;
 		break;
 		case 2:
-		Timmer_n->CCR2 =duty;
+		Timmer_n->CCR2 =duty_out;
 		break;
 		case 3:
-		Timmer_n->CCR3 =duty;
+		Timmer_n->CCR3 =duty_out;
 		break;
 		case 4:
-		Timmer_n->CCR4 =duty;
+		Timmer_n->CCR4 =duty_out;
 		break;
 		default:
-		Timmer_n->CCR1 =duty;
+		Timmer_n->CCR1 =duty_out;
 	}
 		
 }
