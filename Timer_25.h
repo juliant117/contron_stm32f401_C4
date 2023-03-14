@@ -8,7 +8,7 @@ class Tim_own_25
 	public:
 	
 	Tim_own_25();
-	~Tim_own_25();
+	~Tim_own_25(){};
 	
 	//char Timmer_n;
 	int time;

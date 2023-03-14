@@ -11,7 +11,7 @@ class Pwm_25:public Tim_own_25 ,public GPIO_own_1
 {
 	public:
 		Pwm_25();
-	 ~Pwm_25();
+	 ~Pwm_25(){};
 	
 	//TIM_TypeDef * chann_n;
 	

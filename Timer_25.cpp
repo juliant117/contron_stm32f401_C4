@@ -36,10 +36,10 @@ void Tim_own_25::T_set_b(int n_timmer)
 void Tim_own_25::T_set_time(int time_n,bool per_freq,bool arr_psc)  
 //time   period s    frecuecy Hz
 //per_freq    0 period    frequency
-//arr_psc			calculate    0 psc    1 arr 
+//arr_psc			    0=calculate psc    1=calculate arr 
 {
 	int F_clock=8000000;   //frecuencia de reloj por defecto
-	if(per_freq)
+	if(per_freq!=1)
 	{//period
 		time =time_n;
 	}
@@ -49,28 +49,28 @@ void Tim_own_25::T_set_time(int time_n,bool per_freq,bool arr_psc)
 	}
   if(arr_psc)
 	{	//arr default   //caculate psc
-		if (per_freq)
+		if (per_freq!=1)
 		{ //period
 			arr_o=1999;  //1999 by default
-			psc_o=((2*F_clock*(time))/(2*arr_o-1))-1;
+			psc_o=((2*F_clock*(time))/(arr_o-1))-1;
 		}
 		else
 		{ //frecueny
 			arr_o=1999;  //1999 by default
-			psc_o=((2*F_clock)/(2*arr_o-1)*(time))-1;
+			psc_o=((2*F_clock)/((arr_o-1)*(time)))-1;
 		}
 	}
 	else
 	{	//psc default	//caculate arr
-		if (per_freq)
+		if (per_freq!=1)
 		{ //period
 			psc_o=1999;  //1999 by default
-			arr_o=((2*F_clock*(time))/(2*psc_o-1))-1;
+			arr_o=((2*F_clock*(time))/(psc_o-1))-1;
 		}
 		else
 		{ //frecueny
 			psc_o=1999;  //1999 by default
-			arr_o=((2*F_clock)/(2*psc_o-1)*(time))-1;
+			arr_o=((2*F_clock)/((psc_o-1)*(time)))-1;
 		}
 	}
 	Timmer_n->ARR=arr_o;

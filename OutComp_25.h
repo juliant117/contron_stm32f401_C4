@@ -9,7 +9,7 @@
 class OutComp_25:public Tim_own_25 ,public GPIO_own_1{
 	public:
 		OutComp_25();
-		~OutComp_25();
+		~OutComp_25(){};
 	TIM_TypeDef * Timmer_n_in;
 	void set_outcomp();			   //set set_output compare at channel assigned
 	
