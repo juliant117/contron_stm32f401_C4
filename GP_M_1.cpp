@@ -68,10 +68,10 @@ void GPIO_own_1::b_FRLH(int ALTFUNC)
 {//alternate functions just introduce alternate function
 	if((pin_GP>=0)&&(pin_GP<=7))
 	{
-		bus_pin-> AFR[0]|=ALTFUNC<<pin_GP;
+		bus_pin-> AFR[0]|=ALTFUNC<<pin_GP*4;
 	}
 	else 
 	{
-		bus_pin-> AFR[1]|=ALTFUNC<<(pin_GP-8);
+		bus_pin-> AFR[1]|=ALTFUNC<<((pin_GP-8)*4);
 	}
 }

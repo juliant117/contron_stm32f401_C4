@@ -5,7 +5,8 @@
 
 using namespace std;
 
-Exti_G1::Exti_G1(){
+Exti_G1::Exti_G1()
+{
 RCC->APB2ENR |= 0X1<<14;  // System configuration controller clock enable
 }
 
@@ -57,8 +58,4 @@ void Exti_G1::set_Ftsr()
 void Exti_G1::set_Rtsr()
 { //rising edge
 	 EXTI->RTSR |= 0X1<<pin_GP;
-}
-void Exti_G1::set_IMR()
-{ //IMR
-	 EXTI->IMR |= 0X1<<pin_GP;
 }
