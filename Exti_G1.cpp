@@ -19,7 +19,7 @@ void Exti_G1::set_Exticr()
 	int n_exti;
 	
 
-	if (pin_GP<5)
+	if(pin_GP<5)
 	{n_exti=pin_GP;
 	}
 	else if((5>=pin_GP) and (pin_GP<=9))
