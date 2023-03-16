@@ -39,14 +39,7 @@ void Tim_own_25::T_set_time(int time_n,bool per_freq,bool arr_psc)
 //arr_psc			    0=calculate psc    1=calculate arr 
 {
 	int F_clock=8000000;   //frecuencia de reloj por defecto
-	if(per_freq!=1)
-	{//period
 		time =time_n;
-	}
-	else
-	{//frequency
-		time =1/time_n;
-	}
   if(arr_psc)
 	{	//arr default   //caculate psc
 		if (per_freq!=1)

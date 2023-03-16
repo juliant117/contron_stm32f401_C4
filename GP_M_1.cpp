@@ -6,7 +6,7 @@ using namespace std;
 
 GPIO_own_1::GPIO_own_1(){}   //constructor
 
-void GPIO_own_1::b_set_pinbus(int pin,char bus='B')   //constructor
+void GPIO_own_1::b_set_pinbus(int pin,char bus)   //constructor
 {
 //concatenate bus GPIO
 		pin_GP=pin;

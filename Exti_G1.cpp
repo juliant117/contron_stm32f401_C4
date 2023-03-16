@@ -14,41 +14,77 @@ void Exti_G1::set_Exticr()
 { 
 	//set interrupt with assigned pin
 	int crn=(pin_GP/4); //SET  NUMBER OF CR  1,2,3,4  
-	int crx=(pin_GP%4);	//shift n to the right 
+	int crx=(pin_GP%4);	//shift n to the left
 	int crxpx;          //SET BUS
+	int n_exti;
+	
+
+	if (pin_GP<5)
+	{n_exti=pin_GP;
+	}
+	else if((5>=pin_GP) and (pin_GP<=9))
+	{
+		n_exti=5;
+	}
+	else//if((10>=pin_GP) and (pin_GP<=15))
+	{
+		n_exti=6;
+	}
 	
 	switch(bus_GP)
 	{
 		case 'A':
-			crxpx=0x0;
+			crxpx=0;
+		break;
 		case 'B':
-			crxpx=0x1;
+			crxpx=1;
+		break;
 		case 'C':
-			crxpx=0x2;
+			crxpx=2;
+		break;
 		case 'D':
-			crxpx=0x3;
+			crxpx=3;
+		break;
 		case 'E':
-			crxpx=0x4;
+			crxpx=4;
+		break;
 		case 'H':
-			crxpx=0x7;
+			crxpx=7;
+		break;
 		default:
-			crxpx=0x0;
-	}
-	switch(crn)
-	{//ITERRUPT
-		case 0:
-			NVIC_EnableIRQ(EXTI0_IRQn);
-		case 1:
-			NVIC_EnableIRQ(EXTI1_IRQn);
-		case 2:
-			NVIC_EnableIRQ(EXTI2_IRQn);
-		case 3:
-			NVIC_EnableIRQ(EXTI3_IRQn);
-		default:
-			NVIC_EnableIRQ(EXTI0_IRQn);
+			crxpx=0;
 	}
 	
-	SYSCFG ->EXTICR[crn] |=crxpx<<pin_GP;
+	switch(n_exti)
+	{//ITERRUPT
+		case 0:
+		NVIC_EnableIRQ(EXTI0_IRQn);
+		break;
+		case 1:
+		NVIC_EnableIRQ(EXTI1_IRQn);
+		break;
+		case 2:
+		NVIC_EnableIRQ(EXTI2_IRQn);
+		break;
+		case 3:
+		NVIC_EnableIRQ(EXTI3_IRQn);
+		break;
+	  case 4:
+		NVIC_EnableIRQ(EXTI4_IRQn);
+		break;
+	  case 5:
+		NVIC_EnableIRQ(EXTI9_5_IRQn);
+		break;
+		case 6:
+		NVIC_EnableIRQ(EXTI15_10_IRQn);
+		break;
+		
+		default:
+		NVIC_EnableIRQ(EXTI0_IRQn);
+	}
+	
+	SYSCFG ->EXTICR[crn] |=crxpx<<(crx*4);
+	//SYSCFG ->EXTICR[3] |=0x2<<1*4;
 	EXTI->IMR |= 0X1<<pin_GP;//IMR
 }
 void Exti_G1::set_Ftsr()

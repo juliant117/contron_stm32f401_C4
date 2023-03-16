@@ -14,8 +14,6 @@ public:
 	void set_Exticr();		//set interrupt with assigned pin  //NVIC_EnableIRQ //IMR
 	void set_Ftsr();			//falling edge
 	void set_Rtsr();			//rising edge
-	
-		
 		
 };
 #endif
