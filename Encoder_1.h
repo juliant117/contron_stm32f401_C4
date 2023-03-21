@@ -31,11 +31,17 @@ class Encoder_1:public Pwm_25,public Exti_G1,public GPIO_own_1,public OutComp_25
 	int	freq_sample;  //freq of sample the angular speed
 	bool way;   			//turning sense   1/0
 		
-	void pwm_a(Pwm_25 pwm_s1);	
-	void pwm_b(Pwm_25 pwm_s2);	
-	void exti_in_1(Exti_G1 exti_in);
-	void in_2(GPIO_own_1  pin_in);
-	void timmer_exti(OutComp_25 out_tim);
+	void pwm_signal(Pwm_25 pwm_s,int pin,char peripheric,int MODER_in,
+									int Alter_f_in,int tim_n,int time_n,bool per_freq,bool arr_psc,
+									int chan_in);							//pwm settings
+
+	//void pwm_b(Pwm_25 pwm_s2);	
+	void exti_in_1(Exti_G1 exti_in, int pin_in,char peripheric,
+								bool Rise_fall); 					//exti interrupt settings
+	void in_2(GPIO_own_1  pin_in, int pin_n,
+						char peripheric);				//pin in settigs
+	void timmer_exti(OutComp_25 out_tim,int tim_n,int time_n,
+									bool per_freq,bool arr_psc);		//timmer interrupt settings
 		
 };	
 #endif
