@@ -7,7 +7,7 @@ using namespace std;
 GPIO_own_1::GPIO_own_1(){}   //constructor
 
 void GPIO_own_1::b_set_pinbus(int pin,char bus)   //constructor
-{
+{//pin n (0,1,2...) bus n(A,b,C...)
 //concatenate bus GPIO
 		pin_GP=pin;
 		bus_GP=bus;
@@ -45,27 +45,28 @@ void GPIO_own_1::b_set_pinbus(int pin,char bus)   //constructor
 }
 
 void GPIO_own_1::b_MODER(int mod)
-{
+{//set MODER on pin n
 //MODER  00: Input (reset state)/	01: General purpose output mode/	10: Alternate function mode/	11: Analog mode
 bus_pin -> MODER |= mod<<2*pin_GP;
 }
 void GPIO_own_1::b_OTYPER(int oty)
-{
+{//set OTYPER on pin n
 //OTYPER	0: Output push-pull (reset state)/	1: Output open-drain
 bus_pin -> OTYPER |= oty<<pin_GP;
 }
 void GPIO_own_1::b_OSPEEDR(int osped)
-{
+{//set OSPEEDR on pin n
 //OSPEEDR	00: Low speed/ 01: Medium speed/ 10: High speed/ 11: Very high speed
 bus_pin -> OSPEEDR |= osped<<2*pin_GP;
 }
 void GPIO_own_1::b_PUPDR(int pup)
-{
+{//set PUPDR on pin n
 //PUPDR 	00: No pull-up, pull-down/ 01: Pull-up/ 10: Pull-down/ 11: Reserved/
 bus_pin -> PUPDR |= pup<<2*pin_GP;	
 }
 void GPIO_own_1::b_FRLH(int ALTFUNC)
 {//alternate functions just introduce alternate function
+ //set FRLH  on pin n
 	if((pin_GP>=0)&&(pin_GP<=7))
 	{
 		bus_pin-> AFR[0]|=ALTFUNC<<pin_GP*4;

@@ -8,7 +8,7 @@ using namespace std;
 Tim_own_25::Tim_own_25(){}
 	
 void Tim_own_25::T_set_b(int n_timmer)
-{
+{	//bus timmer (2,3,4,5) ....
 	//select timmer 2-5
 	bus_n=n_timmer;
 	switch(n_timmer)
@@ -34,10 +34,10 @@ void Tim_own_25::T_set_b(int n_timmer)
 	}
 }
 void Tim_own_25::T_set_time(int time_n,bool per_freq,bool arr_psc)  
-//time   period s    frecuecy Hz
+{//time   period s    frecuecy Hz
 //per_freq    0 period    frequency
 //arr_psc			    0=calculate psc    1=calculate arr 
-{
+
 	int F_clock=8000000;   //frecuencia de reloj por defecto
 		time =time_n;
   if(arr_psc)
@@ -71,12 +71,12 @@ void Tim_own_25::T_set_time(int time_n,bool per_freq,bool arr_psc)
 }
 
 void  Tim_own_25::T_set_cnt(int cnt_in)
-{
+{//set_cnt
 //
 Timmer_n->CNT=cnt_in;   
 }
 void Tim_own_25::T_set_cr1(int cr1_in)
-{
+{//set_cr1
 //0 Counter enable
 //1 Update disable
 //
@@ -84,7 +84,7 @@ void Tim_own_25::T_set_cr1(int cr1_in)
 }
 
 void Tim_own_25::T_enab_int()
-{
+{//enable interrupt
 	int timer_n =bus_n;
 	Timmer_n-> DIER|=0x1;
 switch(timer_n)
@@ -107,6 +107,6 @@ switch(timer_n)
 }
 
 void Tim_own_25::T_select_channel(int chan_in)
-{	//number of channel
+{	//number of channel 
 	channel=chan_in;
 }

@@ -18,7 +18,7 @@ class Pwm_25:public Tim_own_25 ,public GPIO_own_1
 	//CCMR_TypeDef * channel_cmr;
 	//TIM_TypeDef * Timmer_n;
 	//
-	void set_pwm(); 				//set pwm at channel assigned
-	void set_duty(int duty);
+	void set_pwm(); 						//default pwm settings at default chanel on timmer
+	void set_duty(int duty);		//set duty    0%-100%
 };
 #endif

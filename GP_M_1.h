@@ -14,11 +14,11 @@ class GPIO_own_1
 	
 	GPIO_TypeDef * bus_pin;
 	
-	void b_set_pinbus(int pin,char bus);
-	void b_MODER(int mod);
-	void b_OTYPER(int oty);
-	void b_OSPEEDR(int osped);
-	void b_PUPDR(int pup);
-	void b_FRLH(int ALTFUNC);
+	void b_set_pinbus(int pin,char bus);  //pin n (0,1,2...) bus n(A,b,C...)
+	void b_MODER(int mod);								//set MODER on pin n
+	void b_OTYPER(int oty);								//set OTYPER on pin n
+	void b_OSPEEDR(int osped);						//set OSPEEDR on pin n
+	void b_PUPDR(int pup);								//set PUPDR on pin n
+	void b_FRLH(int ALTFUNC);							//set FRLH on pin n
 };
 #endif

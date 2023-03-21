@@ -8,7 +8,7 @@ using namespace std;
 Pwm_25 :: Pwm_25(){}
 
 void Pwm_25 ::set_pwm()
-{
+{	//default pwm settings at default chanel on timmer
 	Timmer_n->EGR|=0x1<<0;
 	switch(channel)
 	{
