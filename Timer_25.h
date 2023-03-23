@@ -14,7 +14,7 @@ class Tim_own_25
 	int time;
 	int arr_o;
 	int psc_o;
-	int cnt_o=0;
+	int cnt_o;
 	int bus_n;
 	int channel;
 	

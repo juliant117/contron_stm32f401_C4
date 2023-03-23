@@ -43,10 +43,15 @@ void Pwm_25 ::set_duty(int duty)
 { //duty %   -> arr=100%
 	int duty_out;
 	duty_out=(arr_o*duty)/100;
-	switch(channel)
+	
+	//duty_out=(2000*duty)/100;
+	//this->Timmer_n->CCR1 =duty_out;
+	
+	switch(this->channel)
 	{
 		case 1:
 		Timmer_n->CCR1 =duty_out;
+		//TIM2->CCR1 =1000;
 		break;
 		case 2:
 		Timmer_n->CCR2 =duty_out;

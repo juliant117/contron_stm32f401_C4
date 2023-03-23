@@ -108,5 +108,5 @@ switch(timer_n)
 
 void Tim_own_25::T_select_channel(int chan_in)
 {	//number of channel 
-	channel=chan_in;
+	this->channel=chan_in;
 }
