@@ -50,8 +50,7 @@ void Encoder_1::pwm_signal(int pmw_signal_n,int pin,char peripheric,int MODER_in
 
 
 
-void Encoder_1:: exti_in_1(int pin_in,char peripheric
-														,bool Rise_fall){
+void Encoder_1:: exti_in_1(int pin_in,char peripheric,bool Rise_fall){
 	exti_in.b_set_pinbus(pin_in,peripheric);	//pin n (0,1,2...) bus n(A,b,C...)
 	exti_in.set_Exticr();					//set interrupt with assigned pi
 	if (Rise_fall!=0){
@@ -69,8 +68,7 @@ void Encoder_1:: in_2(int pin_n,char peripheric){
 	idr_in.b_set_pinbus(pin_n,peripheric);		//pin n (0,1,2...) bus n(A,b,C...)
 }	
 
-void Encoder_1:: timmer_exti(OutComp_25 out_tim,int tim_n,int time_n,
-															bool per_freq,bool arr_psc){
+void Encoder_1:: timmer_exti(int tim_n,int time_n,	bool per_freq,bool arr_psc){
 	out_tim.T_set_b(tim_n);					//select timmer n (2-5)
 	out_tim.T_set_time(time_n,per_freq,arr_psc);  //time / per_freq / arr_psc
 	out_tim.T_set_cr1(0);				//cr1 0x1 enable

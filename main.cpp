@@ -46,14 +46,14 @@ extern "C"
 {
 void TIM3_IRQHandler(void){
 	 TIM3->SR &=~1;
-	//GPIOA ->ODR ^= 0X1<<5;
+	GPIOA ->ODR ^= 0X1<<5;
 	
 }
 void EXTI15_10_IRQHandler(void){
 	EXTI->PR |= 0X1 << 13;
-	
 	n_pulses++;
 	GPIOA ->ODR ^= 0X1<<5;
+	
 }
 void EXTI0_IRQHandler(void){
 	EXTI->PR |=0X1;
@@ -67,7 +67,7 @@ void EXTI0_IRQHandler(void){
 		n_pulses--;
 	
 		}
-	GPIOA ->ODR ^= 0X1<<5;
+	//GPIOA ->ODR ^= 0X1<<5;
 }
 
 }
@@ -79,7 +79,7 @@ int main(void)
 //duty_probe();
 
 	
-//pio_pin();
+pio_pin();
 //timer_pin();	
 	
 	
@@ -97,19 +97,13 @@ while(1)
 }
 
 void set_Encoder2(){
-enco_2.pwm_signal( 1, 0, 'A', 0x2,
-									 0x1, 2, 1, 0, 0,
-									 1);
-	
-enco_2.pwm_signal( 2, 1, 'A', 0x2,
-									 0x1, 2, 1, 0, 0,
-									 2);
-
+//settings encoder_2
+enco_2.pwm_signal( 1, 0, 'A', 0x2,0x1, 2, 1, 0, 0,1);
+enco_2.pwm_signal( 2, 1, 'A', 0x2,0x1, 2, 1, 0, 0,2);
 enco_2.exti_in_1(  0, 'C',0);
-enco_2.in_2( 1,  'C');
-//	
-//enco_2.timmer_exti( tim_s1_e2, 3, 5,
-//									 1, 0);
+enco_2.in_2( 1, 'C');
+enco_2.timmer_exti( 3, 5, 1, 0);
+	
 }
 
 void duty_probe(){
@@ -118,19 +112,19 @@ enco_2.pwm_s2.set_duty(0);
 }
 
 
-//void pio_pin(){
+void pio_pin(){
 
-//led.b_set_pinbus(5,'A');	
+led.b_set_pinbus(5,'A');	
 
-//led.b_MODER(0x01);	
-//GPIOA-> ODR |= 	0X0 <<5;
-//	
-//	
+led.b_MODER(0x01);	
+GPIOA-> ODR |= 	0X0 <<5;
+	
+	
 //pc13.b_set_pinbus(13,'C');
 //pc13.set_Exticr();
 //pc13.set_Ftsr();
-////NVIC_EnableIRQ(EXTI15_10_IRQn);
-//}
+//NVIC_EnableIRQ(EXTI15_10_IRQn);
+}
 
 
 //void interrupt_c13()
