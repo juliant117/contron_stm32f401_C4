@@ -23,7 +23,7 @@ class Encoder_1:public Pwm_25,public Exti_G1,public OutComp_25 //,public GPIO_ow
 	//one pin interrupt
 	Exti_G1 exti_in;	
 	//one idr
-	GPIO_own_1  pin_in;
+	GPIO_own_1  idr_in;
 	//one timmer interrupt
 	OutComp_25 out_tim;
 	
@@ -41,8 +41,7 @@ class Encoder_1:public Pwm_25,public Exti_G1,public OutComp_25 //,public GPIO_ow
 									
 	void exti_in_1( int pin_in,char peripheric,
 								bool Rise_fall); 					//exti interrupt settings
-	void in_2(GPIO_own_1  pin_in, int pin_n,
-						char peripheric);				//pin in settigs
+	void in_2( int pin_n,	char peripheric);				//pin in settigs
 	void timmer_exti(OutComp_25 out_tim,int tim_n,int time_n,
 									bool per_freq,bool arr_psc);		//timmer interrupt settings
 		

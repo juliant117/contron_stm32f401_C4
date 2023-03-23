@@ -106,15 +106,15 @@ enco_2.pwm_signal( 2, 1, 'A', 0x2,
 									 2);
 
 enco_2.exti_in_1(  0, 'C',0);
-enco_2.in_2(in_id_1_e2,  1,  'C');
+enco_2.in_2( 1,  'C');
 //	
 //enco_2.timmer_exti( tim_s1_e2, 3, 5,
 //									 1, 0);
 }
 
 void duty_probe(){
-enco_2.pwm_s1.set_duty(90);	
-enco_2.pwm_s2.set_duty(75);
+enco_2.pwm_s1.set_duty(0);	
+enco_2.pwm_s2.set_duty(0);
 }
 
 
@@ -168,33 +168,35 @@ enco_2.pwm_s2.set_duty(75);
 
 //}
 
-void pwm_pin(){
-//pwm tim2 A0
-//GPIO
- 
-pwm_a0.b_set_pinbus(0,'A');		
-pwm_a0.b_MODER(0x2);					
-pwm_a0.b_FRLH(0x1);						
-//Time
-pwm_a0.T_set_b(2);						//set timer
-pwm_a0.T_set_time(1,0,0);			//setting time
 
-pwm_a0.T_select_channel(1);		//select channel
-pwm_a0.set_pwm();							//pwm
 
-pwm_a0.T_set_cr1(0); 					//enable cr1 
+//void pwm_pin(){
+////pwm tim2 A0
+////GPIO
+// 
+//pwm_a0.b_set_pinbus(0,'A');		
+//pwm_a0.b_MODER(0x2);					
+//pwm_a0.b_FRLH(0x1);						
+////Time
+//pwm_a0.T_set_b(2);						//set timer
+//pwm_a0.T_set_time(1,0,0);			//setting time
+
+//pwm_a0.T_select_channel(1);		//select channel
+//pwm_a0.set_pwm();							//pwm
+
+//pwm_a0.T_set_cr1(0); 					//enable cr1 
+////	
+////pwm tim2 A1
+////GPIO
+//pwm_a1.b_set_pinbus(1,'A');		//pin 1 bus a
+//pwm_a1.b_MODER(0x2);					
+//pwm_a1.b_FRLH(0x1);		
 //	
-//pwm tim2 A1
-//GPIO
-pwm_a1.b_set_pinbus(1,'A');		//pin 1 bus a
-pwm_a1.b_MODER(0x2);					
-pwm_a1.b_FRLH(0x1);		
-	
-pwm_a1.T_set_b(2);						//set timer
-pwm_a1.T_set_time(1,0,0);			//setting time
+//pwm_a1.T_set_b(2);						//set timer
+//pwm_a1.T_set_time(1,0,0);			//setting time
 
-pwm_a1.T_select_channel(2);		//select channel
-pwm_a1.set_pwm();							//pwm
-pwm_a1.T_set_cr1(0); 					//enable cr1 
+//pwm_a1.T_select_channel(2);		//select channel
+//pwm_a1.set_pwm();							//pwm
+//pwm_a1.T_set_cr1(0); 					//enable cr1 
 
-}
+//}

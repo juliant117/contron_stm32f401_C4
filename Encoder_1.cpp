@@ -64,8 +64,9 @@ void Encoder_1:: exti_in_1(int pin_in,char peripheric
 	
 }	
 
-void Encoder_1:: in_2(GPIO_own_1  pin_in,int pin_n,char peripheric){
-	pin_in.b_set_pinbus(pin_n,peripheric);		//pin n (0,1,2...) bus n(A,b,C...)
+void Encoder_1:: in_2(int pin_n,char peripheric){
+	
+	idr_in.b_set_pinbus(pin_n,peripheric);		//pin n (0,1,2...) bus n(A,b,C...)
 }	
 
 void Encoder_1:: timmer_exti(OutComp_25 out_tim,int tim_n,int time_n,
