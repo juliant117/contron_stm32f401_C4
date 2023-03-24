@@ -11,7 +11,7 @@ class GPIO_own_1
 	
 	int pin_GP;
 	char bus_GP;
-	
+	bool pin_idr; 
 	GPIO_TypeDef * bus_pin;
 	
 	void b_set_pinbus(int pin,char bus);  //pin n (0,1,2...) bus n(A,b,C...)

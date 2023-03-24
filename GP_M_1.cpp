@@ -78,8 +78,9 @@ void GPIO_own_1::b_FRLH(int ALTFUNC)
 }
 
 bool GPIO_own_1::b_p_idr(){
-		bool pin_idr; 
-		pin_idr=(bus_pin ->	IDR and 0x1<<pin_GP)==(0x1<<pin_GP);
+		
+		pin_idr=((bus_pin->IDR & (0x1<<pin_GP))==(0x1<<pin_GP));
+		//pin_idr=
 		return pin_idr;
 	
 	}

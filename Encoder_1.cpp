@@ -93,11 +93,11 @@ void Encoder_1::set_pwm(int width_pwm){
 	{
 		pwm_s1.set_duty(0);	
 	  pwm_s2.set_duty(0);
-		for(int i=0;i<=100;i++)	{}		//time to wait to switch transistors
+		//for(int i=0;i<=10;i++)	{}		//time to wait to switch transistors
 		pwm_s1.set_duty(width_pwm);	
 	  pwm_s2.set_duty(0);
 	}
-	else if((width_pwm<10) and (width_pwm>-10))   //neutral signal
+	else if((width_pwm<5) and (width_pwm>-5))   //neutral signal
 		{
 		 pwm_s1.set_duty(0);	
 	   pwm_s2.set_duty(0);
@@ -106,7 +106,7 @@ void Encoder_1::set_pwm(int width_pwm){
 	{
 		pwm_s1.set_duty(0);	
 	  pwm_s2.set_duty(0);
-		for(int i=0;i<=100;i++)	{}		//time to wait to switch transistors
+		//for(int i=0;i<=10;i++)	{}		//time to wait to switch transistors
 		pwm_s1.set_duty(0);	
 	  pwm_s2.set_duty(-width_pwm);
 	}
