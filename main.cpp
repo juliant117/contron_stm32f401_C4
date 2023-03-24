@@ -45,17 +45,8 @@ void EXTI15_10_IRQHandler(void){
 }
 void EXTI0_IRQHandler(void){
 	EXTI->PR |=0X1;
-	if ((GPIOC -> IDR & 1<<1)==(0x1<<1))
-		{
-		n_pulses++;
-		
-		}
-		else
-		{
-		n_pulses--;
+	enco_2.count_pulses();
 	
-		}
-	//GPIOA ->ODR ^= 0X1<<5;
 }
 
 }
@@ -101,9 +92,7 @@ enco_2.pwm_s2.set_duty(0);
 
 
 void pio_pin(){
-
 led.b_set_pinbus(5,'A');	
-
 led.b_MODER(0x01);	
 GPIOA-> ODR |= 	0X0 <<5;
 	

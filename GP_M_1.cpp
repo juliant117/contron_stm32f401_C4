@@ -84,7 +84,21 @@ bool GPIO_own_1::b_p_idr(){
 	
 	}
 		
-void GPIO_own_1::b_p_odr(bool out){//1=on 0=off
-	bus_pin ->ODR ^= 0X1<<pin_GP;
+void GPIO_own_1::b_p_odr(int out){//1=on 0=off 2=blink
+	switch(out){
+		case 0:			//off
+		bus_pin ->ODR &=~ 0X1<<pin_GP;	
+		break;
+		case 1:			//on
+		bus_pin ->ODR |= 0X1<<pin_GP;	
+		break;
+		case 2:			//blink
+		bus_pin ->ODR ^= 0X1<<pin_GP;	
+		break;
+		default:
+		bus_pin ->ODR ^= 0X1<<pin_GP;
+	
+	}
+	
 	
 	}

@@ -70,6 +70,45 @@ void Encoder_1:: timmer_exti(int tim_n,int time_n,	bool per_freq,bool arr_psc){
 
 
 //********************************** logic ************************************
-void count_pulses(){
-
+ void Encoder_1::count_pulses(){     //add and subtract the pulses
+		if (idr_in.b_p_idr())
+		{
+		n_pulses++;
+		
+		}
+		else
+		{
+		n_pulses--;
+	
+		}
+}
+	
+void Encoder_1::get_pulses(){
+		
+}
+void Encoder_1::set_pwm(int width_pwm){
+	//change both signals hust with the inpus signal + / - 
+	
+	if (width_pwm>=10)						//positive signal
+	{
+		pwm_s1.set_duty(0);	
+	  pwm_s2.set_duty(0);
+		for(int i=0;i<=100;i++)	{}		//time to wait to switch transistors
+		pwm_s1.set_duty(width_pwm);	
+	  pwm_s2.set_duty(0);
+	}
+	else if((width_pwm<10) and (width_pwm>-10))   //neutral signal
+		{
+		 pwm_s1.set_duty(0);	
+	   pwm_s2.set_duty(0);
+		}
+	else if(width_pwm<-10)				//negative sigal
+	{
+		pwm_s1.set_duty(0);	
+	  pwm_s2.set_duty(0);
+		for(int i=0;i<=100;i++)	{}		//time to wait to switch transistors
+		pwm_s1.set_duty(0);	
+	  pwm_s2.set_duty(-width_pwm);
+	}
+	
 }

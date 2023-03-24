@@ -46,8 +46,11 @@ class Encoder_1:public Pwm_25,public Exti_G1,public OutComp_25 //,public GPIO_ow
 	void timmer_exti(int tim_n,int time_n,
 									bool per_freq,bool arr_psc);		//timmer interrupt settings
 //********************************** logic **********************************
-	void count_pulses();
+	void count_pulses();						//add and subtract the pulses
 	
 	void get_pulses();
+	void set_pwm(int width_pwm);		//change both signals hust with the inpus signal + / - 
+	
+	
 };	
 #endif
