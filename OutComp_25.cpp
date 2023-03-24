@@ -23,6 +23,5 @@ void OutComp_25 :: set_outcomp()
 		break;
 		default:
 		Timmer_n->	DIER|=0x1<<0;
-	
 	}
 }

@@ -23,9 +23,7 @@ void set_Encoder2();
 void duty_probe();
 
 // **********************  Encoder 1	**********************
-
 GPIO_own_1  led;
-
 // **********************  Encoder 2	**********************
 Encoder_1 enco_2;
 // **********************  Wiii	**********************
@@ -75,7 +73,7 @@ pio_pin();
 	
 //interrupt_c13();
 	
-//***************** Ecoder class
+//***************** Ecoder class **************************
 set_Encoder2();			//Encoder 2 settings 2_pwm 1_exti 1_idr 1_timmer
 
 duty_probe();
@@ -85,9 +83,9 @@ while(1)
 	
 }
 }
-
+//****************** Settings Encoder_2 **************************
 void set_Encoder2(){
-//settings encoder_2
+
 enco_2.pwm_signal( 1, 0, 'A', 0x2,0x1, 2, 1, 0, 0,1);
 enco_2.pwm_signal( 2, 1, 'A', 0x2,0x1, 2, 1, 0, 0,2);
 enco_2.exti_in_1(  0, 'C',0);

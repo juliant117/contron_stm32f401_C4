@@ -8,15 +8,14 @@ using namespace std;
 
 //Encoder_1::Encoder_1(Pwm_25 a,Pwm_25 b,Exti_G1 c,GPIO_own_1 d,OutComp_25 e){
 Encoder_1::Encoder_1(){}
-	
+//********************************** settings **********************************
 void Encoder_1::pwm_signal(int pmw_signal_n,int pin,char peripheric,int MODER_in,
 									int Alter_f_in,int tim_n,int time_n,bool per_freq,bool arr_psc,
 									int chan_in){
-	
+										
 	//select signal of pwm
 	switch(pmw_signal_n){
 		case 1:
-			//pwm_s=pwm_s1;
 		//GPIO
 	pwm_s1.b_set_pinbus(pin,peripheric);  	//pin n (0,1,2...) bus n(A,b,C...)
 	pwm_s1.b_MODER(MODER_in);				 	//moder(alern function 10 => 0x2)
@@ -29,7 +28,6 @@ void Encoder_1::pwm_signal(int pmw_signal_n,int pin,char peripheric,int MODER_in
 	pwm_s1.T_set_cr1(0);					//cr1 0x1 enable
 		break;
 		case 2:
-			//pwm_s=pwm_s2;
 		//GPIO
 	pwm_s2.b_set_pinbus(pin,peripheric);  	//pin n (0,1,2...) bus n(A,b,C...)
 	pwm_s2.b_MODER(MODER_in);				 	//moder(alern function 10 => 0x2)
@@ -45,11 +43,6 @@ void Encoder_1::pwm_signal(int pmw_signal_n,int pin,char peripheric,int MODER_in
 
 }
 									
-				
-									
-
-
-
 void Encoder_1:: exti_in_1(int pin_in,char peripheric,bool Rise_fall){
 	exti_in.b_set_pinbus(pin_in,peripheric);	//pin n (0,1,2...) bus n(A,b,C...)
 	exti_in.set_Exticr();					//set interrupt with assigned pi
@@ -59,7 +52,6 @@ void Encoder_1:: exti_in_1(int pin_in,char peripheric,bool Rise_fall){
 	else{
 		exti_in.set_Ftsr();						//falling edge
 	}
-		
 	
 }	
 
@@ -75,3 +67,9 @@ void Encoder_1:: timmer_exti(int tim_n,int time_n,	bool per_freq,bool arr_psc){
 	out_tim.T_enab_int();				//enable interrupt
 	out_tim.set_outcomp();			//set set_output compare at channel assigned
 }		
+
+
+//********************************** logic ************************************
+void count_pulses(){
+
+}

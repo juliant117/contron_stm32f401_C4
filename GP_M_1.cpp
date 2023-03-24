@@ -76,3 +76,15 @@ void GPIO_own_1::b_FRLH(int ALTFUNC)
 		bus_pin-> AFR[1]|=ALTFUNC<<((pin_GP-8)*4);
 	}
 }
+
+bool GPIO_own_1::b_p_idr(){
+		bool pin_idr; 
+		pin_idr=(bus_pin ->	IDR and 0x1<<pin_GP)==(0x1<<pin_GP);
+		return pin_idr;
+	
+	}
+		
+void GPIO_own_1::b_p_odr(bool out){//1=on 0=off
+	bus_pin ->ODR ^= 0X1<<pin_GP;
+	
+	}

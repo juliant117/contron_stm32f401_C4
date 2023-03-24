@@ -16,10 +16,10 @@ class Encoder_1:public Pwm_25,public Exti_G1,public OutComp_25 //,public GPIO_ow
 	Encoder_1();
 	~Encoder_1(){};
 	
-	//two signals of pwm
+	//***************** own subclasses *****************
+ 	//two signals of pwm
 	Pwm_25 pwm_s1;
 	Pwm_25 pwm_s2;
-		
 	//one pin interrupt
 	Exti_G1 exti_in;	
 	//one idr
@@ -27,14 +27,15 @@ class Encoder_1:public Pwm_25,public Exti_G1,public OutComp_25 //,public GPIO_ow
 	//one timmer interrupt
 	OutComp_25 out_tim;
 	
+	//***************** Encoder variable's *****************	
 		
 	int	n_pulses;   	//count of pulses
 	int	pwm_out;			//signal for both pwm   +/-
 	int	freq_sample;  //freq of sample the angular speed
 	bool way;   			//turning sense   1/0
-	
-	void set_objects(Pwm_25 pwm_in1,Pwm_25 pwm_in2,Exti_G1 exti_in,GPIO_own_1  pin_in,OutComp_25 out_tim);
 		
+//********************************** settings **********************************		
+	
 	void pwm_signal(int pmw_signal_n,int pin,char peripheric,int MODER_in,
 									int Alter_f_in,int tim_n,int time_n,bool per_freq,bool arr_psc,
 									int chan_in);							//pwm settings
@@ -44,6 +45,9 @@ class Encoder_1:public Pwm_25,public Exti_G1,public OutComp_25 //,public GPIO_ow
 	void in_2( int pin_n,	char peripheric);				//pin in settigs
 	void timmer_exti(int tim_n,int time_n,
 									bool per_freq,bool arr_psc);		//timmer interrupt settings
-		
+//********************************** logic **********************************
+	void count_pulses();
+	
+	void get_pulses();
 };	
 #endif

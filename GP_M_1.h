@@ -20,5 +20,8 @@ class GPIO_own_1
 	void b_OSPEEDR(int osped);						//set OSPEEDR on pin n
 	void b_PUPDR(int pup);								//set PUPDR on pin n
 	void b_FRLH(int ALTFUNC);							//set FRLH on pin n
+	bool b_p_idr();												//return 1 in 
+	void b_p_odr(bool out);               //1=on 0=off
+		
 };
 #endif
