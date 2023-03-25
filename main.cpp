@@ -51,17 +51,15 @@ void SysTick_Handler(void){
 	sys_tim[0]=0;
 	sys_tim[1]++;	
 		
-	enco_2.set_pwm(cont_enc2.calculate_pid(enco_2.n_pulses));
-	//cont_enc2.calculate_pid(enco_2.n_pulses);
-	//cont_enc2.calculate_pid(enco_2.n_pulses)
-	//out_control=cont_enc2.calculate_pid(enco_2.n_pulses);
+	//******************** pid  ********************	
+	//*****************  positionn ********************
+	//enco_2.set_pwm(cont_enc2.calculate_pid(enco_2.n_pulses));
+	//*****************  speed ********************
+		enco_2.set_pwm(cont_enc2.calculate_pid(enco_2.speed));
 		
 	out_control=	cont_enc2.out_signal;
 	error_control=cont_enc2.cur_error;
-		
-	//vel_pwm(sys_tim[1]);	
-	//enco_2.set_pwm(sys_tim[1]);
-		
+			
 	
 	if(sys_tim[1]>=100)
 	{
@@ -72,9 +70,10 @@ void SysTick_Handler(void){
 	
 }	
 void TIM3_IRQHandler(void){
-	 TIM3->SR &=~1;
+	TIM3->SR &=~1;
 	GPIOA ->ODR ^= 0X1<<5;
-	
+	enco_2.get_speed(9);
+	pulse_n_n=enco_2.speed;
 }
 void EXTI15_10_IRQHandler(void){
 	EXTI->PR |= 0X1 << 13;
@@ -84,18 +83,7 @@ void EXTI15_10_IRQHandler(void){
 void EXTI0_IRQHandler(void){
 	EXTI->PR |=0X1;
 	enco_2.count_pulses();
-	pulse_n_n=enco_2.n_pulses;
-//	if ((GPIOC -> IDR & 1<<1)==(0x1<<1))
-//		{
-//		enco_2.n_pulses++;
-//		
-//		}
-//		else
-//		{
-//		enco_2.n_pulses--;
-//	
-//		}
-//		pulse_n_n=enco_2.n_pulses;
+	//pulse_n_n=enco_2.n_pulses;
 	
 }
 
@@ -109,26 +97,23 @@ int main(void)
   SysTick_Config( SystemCoreClock/1000);
 	
 //***************** Ecoder class **************************	
-//pwm_pin();
+
 //duty_probe();
 
-	
 pio_pin();
-//timer_pin();	
-	
-	
-//interrupt_c13();
+
 	
 //***************** Ecoder class **************************
 	set_Encoder2();			//Encoder 2 settings 2_pwm 1_exti 1_idr 1_timmer
 
   duty_probe();
-	reference_in_nose=2000;
 	
+	//******************** pid postion ********************
+	reference_in_nose=15;
 	cont_enc2.set_ref_signal(reference_in_nose);
-	cont_enc2.set_conf(2,0,0);
+	cont_enc2.set_conf(3,0.05,0.005);
 	
-	
+	//******************** pid speed ********************
 while(1)
 {
 	//pc13 user button
@@ -142,7 +127,7 @@ enco_2.pwm_signal( 1, 0, 'A', 0x2,0x1, 2, 50, 1, 0,1);
 enco_2.pwm_signal( 2, 1, 'A', 0x2,0x1, 2, 50, 1, 0,2);
 enco_2.exti_in_1(  0, 'C',0);
 enco_2.in_2( 1, 'C');
-enco_2.timmer_exti( 3, 5, 1, 0);
+enco_2.timmer_exti( 3, 9, 1, 0);
 	
 }
 

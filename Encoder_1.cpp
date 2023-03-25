@@ -89,7 +89,7 @@ void Encoder_1::get_pulses(){
 void Encoder_1::set_pwm(int width_pwm){
 	//change both signals hust with the inpus signal + / - 
 	
-	if (width_pwm>=10)						//positive signal
+	if (width_pwm>=1)						//positive signal
 	{
 		pwm_s1.set_duty(0);	
 	  pwm_s2.set_duty(0);
@@ -97,12 +97,12 @@ void Encoder_1::set_pwm(int width_pwm){
 		pwm_s1.set_duty(width_pwm);	
 	  pwm_s2.set_duty(0);
 	}
-	else if((width_pwm<5) and (width_pwm>-5))   //neutral signal
+	else if((width_pwm<1) and (width_pwm>-1))   //neutral signal
 		{
 		 pwm_s1.set_duty(0);	
 	   pwm_s2.set_duty(0);
 		}
-	else if(width_pwm<-10)				//negative sigal
+	else if(width_pwm<-1)				//negative sigal
 	{
 		pwm_s1.set_duty(0);	
 	  pwm_s2.set_duty(0);
@@ -110,5 +110,13 @@ void Encoder_1::set_pwm(int width_pwm){
 		pwm_s1.set_duty(0);	
 	  pwm_s2.set_duty(-width_pwm);
 	}
+}
+
+void Encoder_1::get_speed(int frecuency){  //calculate speed  rev/seg
+	//224 pulses like 1 revolution
+  int n_time=10;      //   (rev/s)   n_time number of seconds
+	speed=((n_pulses*frecuency*n_time)/224);			
+	n_pulses=0;
+	
 	
 }

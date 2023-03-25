@@ -32,7 +32,7 @@ class Encoder_1:public Pwm_25,public Exti_G1,public OutComp_25 //,public GPIO_ow
 	int	n_pulses;   	//count of pulses
 	int	pwm_out;			//signal for both pwm   +/-
 	int	freq_sample;  //freq of sample the angular speed
-	bool way;   			//turning sense   1/0
+	double speed;     //Encoder speed
 		
 //********************************** settings **********************************		
 	
@@ -50,7 +50,7 @@ class Encoder_1:public Pwm_25,public Exti_G1,public OutComp_25 //,public GPIO_ow
 	
 	void get_pulses();
 	void set_pwm(int width_pwm);		//change both signals hust with the inpus signal + / - 
-	
+	void get_speed(int frecuency);
 	
 };	
 #endif
