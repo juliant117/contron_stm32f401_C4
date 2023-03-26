@@ -29,8 +29,7 @@ void Tim_own_25::T_set_b(int n_timmer)
 		RCC->APB1ENR |= 0X1<<3;			//enable clock tim5
 		this->Timmer_n=TIM5;
 		break;
-		default:
-		this->Timmer_n=TIM2;
+
 	}
 }
 void Tim_own_25::T_set_time(int time_n,bool per_freq,bool arr_psc)  
@@ -101,8 +100,7 @@ switch(timer_n)
 		case 5:
 		NVIC_EnableIRQ(TIM5_IRQn);
 		break;
-		default:
-		NVIC_EnableIRQ(TIM2_IRQn);
+
 	}
 }
 

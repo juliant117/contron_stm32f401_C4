@@ -51,8 +51,7 @@ void Exti_G1::set_Exticr()
 		case 'H':
 			crxpx=7;
 		break;
-		default:
-			crxpx=0;
+
 	}
 	
 	switch(n_exti)
@@ -79,8 +78,7 @@ void Exti_G1::set_Exticr()
 		NVIC_EnableIRQ(EXTI15_10_IRQn);
 		break;
 		
-		default:
-		NVIC_EnableIRQ(EXTI0_IRQn);
+
 	}
 	
 	SYSCFG ->EXTICR[crn] |=crxpx<<(crx*4);

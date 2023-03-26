@@ -21,8 +21,7 @@ void OutComp_25 :: set_outcomp()
 		case 4:
 		Timmer_n->	DIER|=0x1<<4;
 		break;
-		default:
-		Timmer_n->	DIER|=0x1<<0;
+
 	}
 	
 }

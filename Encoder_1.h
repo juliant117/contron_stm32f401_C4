@@ -26,6 +26,11 @@ class Encoder_1:public Pwm_25,public Exti_G1,public OutComp_25 //,public GPIO_ow
 	GPIO_own_1  idr_in;
 	//one timmer interrupt
 	OutComp_25 out_tim;
+	//stepper  //direction and n_o_steps
+	GPIO_own_1 out_dir;
+	GPIO_own_1 out_n_s;
+			
+	
 	
 	//***************** Encoder variable's *****************	
 		
@@ -33,9 +38,17 @@ class Encoder_1:public Pwm_25,public Exti_G1,public OutComp_25 //,public GPIO_ow
 	int	pwm_out;			//signal for both pwm   +/-
 	int	freq_sample;  //freq of sample the angular speed
 	double speed;     //Encoder speed
-		
-//********************************** settings **********************************		
+	double n_pul_ste_rev;   //number of pulses or steps per revolution
+	//--------------- steeper ------------------------------
+ 	bool direction;		//state for direction of steper
+	int n_steps;					//number of steps 
+	bool speed_pos;				//speed 
+	bool change_pulse;    //state to make a square pulse
 	
+	
+//********************************** settings **********************************		
+ //  --------------- DC motor  ---------------
+  void set_number_pul_step(double n_pul_ste_rev_in); 
 	void pwm_signal(int pmw_signal_n,int pin,char peripheric,int MODER_in,
 									int Alter_f_in,int tim_n,int time_n,bool per_freq,bool arr_psc,
 									int chan_in);							//pwm settings
@@ -45,12 +58,20 @@ class Encoder_1:public Pwm_25,public Exti_G1,public OutComp_25 //,public GPIO_ow
 	void in_2( int pin_n,	char peripheric);				//pin in settigs
 	void timmer_exti(int tim_n,int time_n,
 									bool per_freq,bool arr_psc);		//timmer interrupt settings
-//********************************** logic **********************************
+	
+	//--------------- steeper ------------------------------
+	void setp_d_4988(int sel_fun,int pin_n,	char peripheric); 	//settings of steps out pin bus
+	void sel_speed_pos(bool speed_pos_in);							//selec  speed=0 pos=1
+	//********************************** logic **********************************
 	void count_pulses();						//add and subtract the pulses
 	
 	void get_pulses();
 	void set_pwm(int width_pwm);		//change both signals hust with the inpus signal + / - 
 	void get_speed(int frecuency);
-	
+	//--------------- steeper ------------------------------
+	void send_steps();															//sen	n pulses stepper
+	void set_steps(int steps_in);					//set number of steps
+	//void set_steps(int steps_in);					//select direction
+	void set_speed(double speed_in);			//set frequency for calculate angular speed
 };	
 #endif

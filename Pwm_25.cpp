@@ -34,9 +34,7 @@ void Pwm_25 ::set_pwm()
 		Timmer_n -> CCER |=0x1<<12;
 		break;
 		
-		default:
-		Timmer_n -> CCMR1|=0x3<<5;  
-		Timmer_n -> CCMR1|=0x1<<3;
+
 	}
 }
 void Pwm_25 ::set_duty(int duty)
@@ -62,8 +60,7 @@ void Pwm_25 ::set_duty(int duty)
 		case 4:
 		Timmer_n->CCR4 =duty_out;
 		break;
-		default:
-		Timmer_n->CCR1 =duty_out;
+
 	}
 		
 }

@@ -9,7 +9,11 @@ using namespace std;
 //Encoder_1::Encoder_1(Pwm_25 a,Pwm_25 b,Exti_G1 c,GPIO_own_1 d,OutComp_25 e){
 Encoder_1::Encoder_1(){}
 //********************************** settings **********************************
-void Encoder_1::pwm_signal(int pmw_signal_n,int pin,char peripheric,int MODER_in,
+	void Encoder_1::set_number_pul_step(double n_pul_ste_rev_in){
+		n_pul_ste_rev=n_pul_ste_rev_in;
+	}
+	
+	void Encoder_1::pwm_signal(int pmw_signal_n,int pin,char peripheric,int MODER_in,
 									int Alter_f_in,int tim_n,int time_n,bool per_freq,bool arr_psc,
 									int chan_in){
 										
@@ -67,8 +71,29 @@ void Encoder_1:: timmer_exti(int tim_n,int time_n,	bool per_freq,bool arr_psc){
 	out_tim.T_enab_int();				//enable interrupt
 	out_tim.set_outcomp();			//set set_output compare at channel assigned
 }		
+void Encoder_1::sel_speed_pos(bool speed_pos_in){   //selec  speed=0 pos=1
+	speed_pos=speed_pos_in;
+}
+//--------------- steeper ------------------------------
 
-
+void Encoder_1::setp_d_4988(int sel_fun,int pin_n,	char peripheric){
+	//settings of steps out pin bus
+	//idr_in.b_set_pinbus(pin_n,peripheric);		//pin n (0,1,2...) bus n(A,b,C...)
+	
+	switch(sel_fun)
+	{
+		case 1:     //direction
+		out_dir.b_set_pinbus(pin_n,peripheric);
+		out_dir.b_MODER(0x1);
+		break;
+		case 2:			//step pulse
+		out_n_s.b_set_pinbus(pin_n,peripheric);
+		out_n_s.b_MODER(0x1);
+		break;
+	}
+	
+	
+}
 //********************************** logic ************************************
  void Encoder_1::count_pulses(){     //add and subtract the pulses
 		if (idr_in.b_p_idr())
@@ -113,10 +138,79 @@ void Encoder_1::set_pwm(int width_pwm){
 }
 
 void Encoder_1::get_speed(int frecuency){  //calculate speed  rev/seg
-	//224 pulses like 1 revolution
+	
   int n_time=10;      //   (rev/s)   n_time number of seconds
-	speed=((n_pulses*frecuency*n_time)/224);			
+	speed=((n_pulses*frecuency*n_time)/n_pul_ste_rev);			
 	n_pulses=0;
+	
+}
+//--------------- steeper ------------------------------
+void Encoder_1::send_steps(){
+	//bool direction;7
+	if(speed_pos==0){n_steps=1;}
+		
+	
+	if (direction)
+	{
+		out_dir.b_p_odr(1);
+	}
+	else
+	{
+		out_dir.b_p_odr(0);
+	}
+	
+	if(n_steps>=1)    //if this recive pulses >0  
+	{
+		out_n_s.b_p_odr(1);
+		for(int i=0;i<100;i++)
+    {
+			__NOP();
+		}
+		out_n_s.b_p_odr(0);
+		if(speed_pos){  //if we need speed n_steps is infinite
+		n_steps--;
+		}
+		else{
+		n_steps=1;
+		}
+	}
+	
+	//int n_steps;
+	
+}
+
+void Encoder_1::set_steps(int steps_in){						//set number of steps
+	//direction
+	if (steps_in>=0)
+	{ 
+		direction=0;
+		n_steps=steps_in;
+	}
+	else if (steps_in<0)
+	{ 
+		direction=1;
+		n_steps=-steps_in;
+	}
 	
 	
 }
+
+void Encoder_1::set_speed(double speed_in){				//set speed
+																//1.8 degrees
+		if (speed_in>=0)
+		{ 
+		direction=0;
+		speed=speed_in;
+		}
+		else if (speed_in<0)
+		{ 
+		direction=1;
+		speed=-speed_in;
+		}
+		//calculate frequency for reach the speed
+	  int freq;
+		freq=speed*200;  													//rev/seg
+		out_tim.T_set_time(freq,1,1);
+		
+}
+		
