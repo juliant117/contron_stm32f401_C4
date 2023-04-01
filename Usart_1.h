@@ -8,7 +8,7 @@
 class Usart_1:public GPIO_own_1{
 public:
 	Usart_1();
-	~Usart_1();
+	~Usart_1(){};
 		
 	//***************** own subclasses *****************
 	GPIO_own_1 own_tx;

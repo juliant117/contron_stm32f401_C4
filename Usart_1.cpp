@@ -15,6 +15,7 @@ void Usart_1::set_usart_n(int usart_n_in,int freq_usart){
 		case 1:
 		RCC->APB2ENR |= 0X1<<4;     //enable clock usart1
 		this->Usart_n=USART1;
+		NVIC_EnableIRQ(USART1_IRQn);
 		break;
 		case 2:
 		RCC->APB1ENR |= 0X1<<17;     //enable clock usart2
@@ -54,7 +55,6 @@ void Usart_1::set_usart_tx(int pin, char bus,int afr){
 		Usart_n->DR = 'a';
 	}
 	*/
-	
 }
 void Usart_1::set_usart_rx(int pin, char bus,int afr){
 	//reception
@@ -62,9 +62,9 @@ void Usart_1::set_usart_rx(int pin, char bus,int afr){
 	Usart_n->CR1 |= 0X1<<2;			// RE: Receiver enable
 	Usart_n->CR1 |= 0X1<<5;			// RXNEIE: RXNE interrupt enable
 	
-	own_tx.b_set_pinbus(pin,bus);
-	own_tx.b_MODER(0x2);
-	own_tx.b_FRLH(afr);
+	own_rx.b_set_pinbus(pin,bus);
+	own_rx.b_MODER(0x2);
+	own_rx.b_FRLH(afr);
 	
 	/*rx
 	if((Usart_n->SR) & (0x1 <<5)){
@@ -73,7 +73,6 @@ void Usart_1::set_usart_rx(int pin, char bus,int afr){
 	}
 	*/
 }
-
 
 
 
@@ -86,10 +85,10 @@ void Usart_1::send_usart(char data){
 
 char Usart_1::recive_data(){			
 	//usart recive data
-	if((Usart_n->SR) & (0x1 <<5)){
-		char data=Usart_n->DR; 
-		Usart_n->SR&=~(0x5);
-		return data;
-	}
+	if(((USART1->SR) & (0x1 <<5))){
+		//letter =USART1->DR;
+		USART1->SR &=~(0x5); //it is necessary
+		return USART1->DR;
+			}
 	return NULL;
 }

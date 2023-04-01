@@ -77,11 +77,9 @@ void GPIO_own_1::b_FRLH(int ALTFUNC)
 }
 
 bool GPIO_own_1::b_p_idr(){
-		
 		pin_idr=((bus_pin->IDR & (0x1<<pin_GP))==(0x1<<pin_GP));
 		//pin_idr=
 		return pin_idr;
-	
 	}
 		
 void GPIO_own_1::b_p_odr(int out){//1=on 0=off 2=blink
@@ -97,6 +95,4 @@ void GPIO_own_1::b_p_odr(int out){//1=on 0=off 2=blink
 		break;
 	
 	}
-	
-	
-	}
+}

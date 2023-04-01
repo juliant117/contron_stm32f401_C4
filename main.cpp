@@ -41,19 +41,20 @@ Usart_1 uart_1;
 
 // **********************  yo don't know **********************
 
-int sys_tim[]={0,-20};    //contador para cambiar de velocidad (se puede con usart)
+int sys_tim[]={0,-20,0,0};    //contador para cambiar de velocidad (se puede con usart)
 
 double pulse_n_n;
 double error_control;
 double out_control;
 double reference_in_nose;
 
-char letter;
+char letter='A';
 
 extern "C"
 {
 void SysTick_Handler(void){	
 	sys_tim[0]++;
+	sys_tim[2]++;
 	if (sys_tim[0]>=100)
 	{
 	sys_tim[0]=0;
@@ -72,8 +73,19 @@ void SysTick_Handler(void){
 	if(sys_tim[1]>=100)
 	{
 		sys_tim[1]=-100;
+		//uart_1.send_usart('A');
 	}
-	
+	if (sys_tim[2]>=100)
+	{
+		sys_tim[3]++;
+		sys_tim[2]=0;
+		if (sys_tim[3]>=40)
+	{
+		sys_tim[3]=0;
+		uart_1.send_usart('a');
+		
+	}
+	}
 	}
 	
 }	
@@ -86,7 +98,7 @@ void TIM3_IRQHandler(void){
 }
 void TIM4_IRQHandler(void){
 	TIM4->SR &=~1;
-	led.b_p_odr(2);
+	//led.b_p_odr(2);
 	enco_3.send_steps();
 }
 
@@ -95,6 +107,7 @@ void EXTI15_10_IRQHandler(void){
 	//GPIOA ->ODR ^= 0X1<<5;
 	
 }
+
 void EXTI0_IRQHandler(void){
 	EXTI->PR |=0X1;
 	enco_2.count_pulses();
@@ -102,7 +115,13 @@ void EXTI0_IRQHandler(void){
 	
 }
 void USART1_IRQHandler(void){
+	//letter=uart_1.recive_data();
+	
+
+	  led.b_p_odr(2);
+
 	letter=uart_1.recive_data();
+	
 }
 }
 
@@ -138,7 +157,7 @@ int main(void)
 while(1)
 {
 	//pc13 user button
-	
+
 }
 }
 //****************** Settings Encoder_2 **************************
