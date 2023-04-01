@@ -20,10 +20,12 @@ void Usart_1::set_usart_n(int usart_n_in,int freq_usart){
 		case 2:
 		RCC->APB1ENR |= 0X1<<17;     //enable clock usart2
 		this->Usart_n=USART1;
+		NVIC_EnableIRQ(USART2_IRQn);
 		break;
 		case 6:
 		RCC->APB2ENR |= 0X1<<5;     //enable clock usart6
 		this->Usart_n=USART1;
+		NVIC_EnableIRQ(USART6_IRQn);
 		break;
 	}
 	

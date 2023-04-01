@@ -20,11 +20,8 @@ void set_usart_n(int usart_n_in,int freq_usart); //usart_settings
 void set_usart_tx(int pin, char bus,int afr);
 void set_usart_rx(int pin, char bus,int afr);
 
-
 void send_usart(char data);			//usart send data
-
 char recive_data();			//usart recive data
 	
-
 };
 #endif
