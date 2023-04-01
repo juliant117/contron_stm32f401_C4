@@ -7,6 +7,7 @@
 #include "OutComp_25.h"
 #include "Pwm_25.h"
 #include "Exti_G1.h"
+#include "Usart_1.h"
 
 #include "Encoder_1.h"
 #include "Control_PID_1.h"
@@ -23,7 +24,7 @@ void interrupt_c13();
 void set_Encoder2();
 void set_Encoder3();
 void duty_probe();
-
+void usart_1();
 // **********************  Encoder 1	**********************
 GPIO_own_1  led;
 GPIO_own_1  led_no1;
@@ -35,8 +36,8 @@ Encoder_1 enco_3;			//steper
 // **********************  control PID	1 **********************
 
 Control_PID_1 cont_enc2;
-
-
+// **********************  comunication PID	1 **********************
+Usart_1 uart_1;
 
 // **********************  yo don't know **********************
 
@@ -46,6 +47,8 @@ double pulse_n_n;
 double error_control;
 double out_control;
 double reference_in_nose;
+
+char letter;
 
 extern "C"
 {
@@ -98,7 +101,9 @@ void EXTI0_IRQHandler(void){
 	//pulse_n_n=enco_2.n_pulses;
 	
 }
-
+void USART1_IRQHandler(void){
+	letter=uart_1.recive_data();
+}
 }
 
 int main(void)
@@ -125,6 +130,9 @@ int main(void)
 	reference_in_nose=15;
 	cont_enc2.set_ref_signal(reference_in_nose);
 	cont_enc2.set_conf(3,0.05,0.005);
+	
+ //******************** USART ********************
+	usart_1();
 	
 	//******************** pid speed ********************
 while(1)
@@ -177,3 +185,13 @@ led.b_MODER(0x01);
 //GPIOA-> ODR |= 	0X0 <<5;
 }
 
+void usart_1(){
+	//pb6  	af07	tx
+	//pb7		af07	rx
+	uart_1.set_usart_n(1,9600);
+	//tx
+	uart_1.set_usart_tx(6,'B',0x07);
+	//rx
+	uart_1.set_usart_rx(7,'B',0x07);
+
+}
