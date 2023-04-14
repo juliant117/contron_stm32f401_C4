@@ -8,6 +8,7 @@
 #include "Pwm_25.h"
 #include "Exti_G1.h"
 #include "Usart_1.h"
+#include "I2c_own_1.h"
 
 #include "Encoder_1.h"
 #include "Control_PID_1.h"
@@ -25,6 +26,7 @@ void set_Encoder2();
 void set_Encoder3();
 void duty_probe();
 void usart_1();
+void i2c_1_own();
 // **********************  Encoder 1	**********************
 GPIO_own_1  led;
 GPIO_own_1  led_no1;
@@ -36,9 +38,9 @@ Encoder_1 enco_3;			//steper
 // **********************  control PID	1 **********************
 
 Control_PID_1 cont_enc2;
-// **********************  comunication PID	1 **********************
+// **********************  comunication 	1 **********************
 Usart_1 uart_1;
-
+I2c_own_1 i2c_1;
 // **********************  yo don't know **********************
 
 int sys_tim[]={0,-20,0,0};    //contador para cambiar de velocidad (se puede con usart)
@@ -205,6 +207,7 @@ led.b_MODER(0x01);
 }
 
 void usart_1(){
+	//usart1   9600brr
 	//pb6  	af07	tx
 	//pb7		af07	rx
 	uart_1.set_usart_n(1,9600);
@@ -214,3 +217,15 @@ void usart_1(){
 	uart_1.set_usart_rx(7,'B',0x07);
 
 }
+
+void i2c_1_own(){
+	//i2c1   2Mhz=0b10
+	//pb8  	af4	scl
+	//pb9		af4	sda
+	
+	
+	i2c_1.set_i2c_scl(8,'B',0x04);
+	i2c_1.set_i2c_sda(9,'B',0x04);
+	
+}
+	
