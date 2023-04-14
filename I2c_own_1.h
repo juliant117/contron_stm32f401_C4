@@ -23,8 +23,8 @@ void set_i2c_scl(int pin, char bus,int afr);
 void set_i2c_sda(int pin, char bus,int afr);		
 		
 //***************** i2c event stream *****************
-void send_i2c(char data);							//i2c sen data
-void recive_i2c(char data);						//i2c recive data
+void addres_transmit_i2c(uint8_t addr_s);							//i2c sen data
+void addres_recive_i2c(uint8_t addr_s);						//i2c recive data
 		
 void Start_i2c_3(void);
 
