@@ -1,5 +1,4 @@
 #include "stm32f4xx.h" 
-#include <stdio.h>
 
 #include "GP_M_1.h" 
 
@@ -11,10 +10,12 @@
 #include "I2c_own_1.h"
 
 #include "Encoder_1.h"
+#include "mpu6050_1.h"
 #include "Control_PID_1.h"
 
 #include "string.h"
-
+#include <vector>
+#include <stdio.h>
 using namespace std;
 
 void pio_pin();    //pin general purpose
@@ -27,6 +28,7 @@ void set_Encoder3();
 void duty_probe();
 void usart_1();
 void i2c_1_own();
+
 // **********************  Encoder 1	**********************
 GPIO_own_1  led;
 GPIO_own_1  led_no1;
@@ -40,11 +42,19 @@ Encoder_1 enco_3;			//steper
 Control_PID_1 cont_enc2;
 // **********************  comunication 	1 **********************
 Usart_1 uart_1;
-I2c_own_1 i2c_1;
+//I2c_own_1 i2c_1;
+MPU6050_1 mpu1;
+
 // **********************  yo don't know **********************
 
 int sys_tim[]={0,-20,0,0};    //contador para cambiar de velocidad (se puede con usart)
 
+//mpu650
+vector<int> mpu_data;
+int accel=0;
+int gyro=0;
+int temp=0;
+//control
 double pulse_n_n;
 double error_control;
 double out_control;
@@ -77,18 +87,21 @@ void SysTick_Handler(void){
 		sys_tim[1]=-100;
 		//uart_1.send_usart('A');
 	}
-	if (sys_tim[2]>=100)
+	}
+	if (sys_tim[2]>=10)
 	{
 		sys_tim[3]++;
 		sys_tim[2]=0;
-		if (sys_tim[3]>=40)
+		if (sys_tim[3]>=5)
 	{
 		sys_tim[3]=0;
-		uart_1.send_usart('a');
 		
+		accel=mpu1.read_data(1);
+		gyro=mpu1.read_data(3);
+		temp=mpu1.read_data(2);
 	}
 	}
-	}
+	
 	
 }	
 void TIM3_IRQHandler(void){
@@ -120,9 +133,8 @@ void USART1_IRQHandler(void){
 	//letter=uart_1.recive_data();
 	
 
-	  led.b_p_odr(2);
-
-	letter=uart_1.recive_data();
+	led.b_p_odr(2);
+  letter=uart_1.recive_data();
 	
 }
 }
@@ -142,24 +154,27 @@ int main(void)
 
 	
 //***************** Ecoder class **************************
-	set_Encoder2();			//Encoder 2 settings 2_pwm 1_exti 1_idr 1_timmer
-	set_Encoder3();
-  duty_probe();
-	enco_3.set_speed(0.1);  //max 6 rev/s
-	enco_3.set_steps(50);
-	//******************** pid postion ********************
-	reference_in_nose=15;
-	cont_enc2.set_ref_signal(reference_in_nose);
-	cont_enc2.set_conf(3,0.05,0.005);
+//	set_Encoder2();			//Encoder 2 settings 2_pwm 1_exti 1_idr 1_timmer
+//	set_Encoder3();
+//  duty_probe();
+//	enco_3.set_speed(0.1);  //max 6 rev/s
+//	enco_3.set_steps(50);
+//	//******************** pid postion ********************
+//	reference_in_nose=15;
+//	cont_enc2.set_ref_signal(reference_in_nose);
+//	cont_enc2.set_conf(3,0.05,0.005);
+//	
+// //******************** USART ********************
+//	usart_1();
 	
- //******************** USART ********************
-	usart_1();
 	
+	i2c_1_own();
 	//******************** pid speed ********************
 while(1)
 {
 	//pc13 user button
-
+		//mpu_data=mpu1.read_data();
+		//accel=mpu_data[0];
 }
 }
 //****************** Settings Encoder_2 **************************
@@ -223,9 +238,14 @@ void i2c_1_own(){
 	//pb8  	af4	scl
 	//pb9		af4	sda
 	
-	
-	i2c_1.set_i2c_scl(8,'B',0x04);
-	i2c_1.set_i2c_sda(9,'B',0x04);
+	mpu1.set_i2c_scl(8,'B',0x04);
+	mpu1.set_i2c_sda(9,'B',0x04);
+	mpu1.set_i2c_n(1,100,16);
+	mpu1.set_ADDR(0);
+	mpu1.set_init();
+	//mpu_data=mpu1.read_data();
 	
 }
+
+
 	

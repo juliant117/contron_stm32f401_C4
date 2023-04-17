@@ -7,26 +7,26 @@ using namespace std;
 I2c_own_1::I2c_own_1(){}
 	
 	
-void I2c_own_1::set_i2c_n(int i2c_n_in,int freq_i2c,int clokfreq){//number of i2c  /  freq i2c  M Hz/ fre1 clock apb   KHz
+void I2c_own_1::set_i2c_n(int i2c_n_in,int freq_i2c,int clokfreq){//number of i2c  /  freq i2c KHz / fre1 clock apb  M Hz
  	//enable rcc and select number of i2c
 	switch(i2c_n_in)
 	{
 		case 1:
-		RCC->APB2ENR |= 0X1<<21;     //enable clock i2c 1
+		RCC->APB1ENR |= 0X1<<21;     //enable clock i2c 1
 		this->i2c_n=I2C1;
 		
 		break;
 		case 2:
-		RCC->APB2ENR |= 0X1<<22;     //enable clock i2c	2
+		RCC->APB1ENR |= 0X1<<22;     //enable clock i2c	2
 		this->i2c_n=I2C2;
 		
 		break;
 		case 3:
-		RCC->APB2ENR |= 0X1<<23;     //enable clock i2c	3
+		RCC->APB1ENR |= 0X1<<23;     //enable clock i2c	3
 		this->i2c_n=I2C3;
 		
 		break;
-	
+	}
 		
 	//RCC peripherics  time-i2c	
 	i2c_n->CR1 |= (0x1<<15);   	// Software reset
@@ -37,23 +37,30 @@ void I2c_own_1::set_i2c_n(int i2c_n_in,int freq_i2c,int clokfreq){//number of i2
 	//select time, this works just for standar mode with max 100 KHz 
 	//standard mode
 	
-	float tr_slc=1000,tw_sclh=4000,Tclock=0,Ti2c=0;
+	float tr_slc=1000,tw_sclh=4000,Tclock=0,Ti2c=0,T_ccr_f=0;
 	int T_ccr=0,t_trise=0;
+	float freq_i2c_f =freq_i2c;
+	float clokfreq_f =clokfreq;
 	//clock apb frequency on MHz
 	i2c_n-> CR2 |= clokfreq;   				//set frequency M Hz FREQ[5:0]: Peripheral clock frequency
-	Tclock=(1000/clokfreq);
-	Ti2c=((1*10^6)/freq_i2c);				//time of clock in ns 
+	Tclock=(1000/clokfreq_f);
+	Ti2c=((1E6)/freq_i2c_f);				//time of clock in ns 
 		
 	//T_ccr=((tr_slc+tw_sclh)/(Tclock));		//solamente genera la maxima frecuencia
-	T_ccr=	(Tclock/(2*Ti2c));
-	i2c_n->CCR |= T_ccr;								//CCR[11:0]  Clock control register in Fm/Sm mode (Master mode)  T ns   dec40-> 100KHz    dec10 -> 400kHz
+	T_ccr_f=	( Ti2c/(2*Tclock));
+	
+	T_ccr=T_ccr_f;
+	i2c_n->CCR |= T_ccr;
+	
+	//i2c_n->CCR |= 80;
+	//CCR[11:0]  Clock control register in Fm/Sm mode (Master mode)  T ns   dec40-> 100KHz    dec10 -> 400kHz
 	//t_trise=(tr_slc/Tclock)+1;
 	
 	i2c_n->TRISE|= clokfreq+1;						// TRISE[5:0]: Maximum rise time in Fm/Sm mode (Master mode)	
 	
 	//********************************          ********************************
 	i2c_n->CR1 |= (0x1<<0);   	//enable i2c 
-	}
+	
 }
 
 void I2c_own_1::set_i2c_scl(int pin, char bus,int afr){
