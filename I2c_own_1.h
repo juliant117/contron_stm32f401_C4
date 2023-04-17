@@ -26,7 +26,8 @@ void set_i2c_sda(int pin, char bus,int afr);
 void addres_transmit_i2c(uint8_t addr_s);							//i2c sen data
 void addres_recive_i2c(uint8_t addr_s);						//i2c recive data
 		
-void Start_i2c_3(void);
+void set_aknowledge(int state);
+void Start_i2c(void);
 
 void write_i2c(uint8_t character);
 int read_i2c(void);	

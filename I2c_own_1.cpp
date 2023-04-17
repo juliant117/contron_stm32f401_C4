@@ -81,75 +81,88 @@ void I2c_own_1::set_i2c_sda(int pin, char bus,int afr){
 
 //***************** i2c event stream *****************
 void I2c_own_1::addres_transmit_i2c(uint8_t addr_s){
-		I2C1->DR = addr_s<<1;			// write addres
+		i2c_n->DR = addr_s<<1;			// write addres
 
 }
 void I2c_own_1::addres_recive_i2c(uint8_t addr_s){
 	addr_s=addr_s<<1;
 	addr_s |= 0x1;
-	I2C1->DR = addr_s;			// write addres
+	i2c_n->DR = addr_s;			// write addres
 }
 
 
 void I2c_own_1::write_i2c(uint8_t character){
-	I2C1->DR = character;// write data	
+	i2c_n->DR = character;// write data	
 }
 int I2c_own_1::read_i2c(void){
 	int8_t data;
-	data= I2C1->DR;
+	data= i2c_n->DR;
 	return data;
 }	
 
-void I2c_own_1::Start_i2c_3(void){
-I2C1->CR1 |= (0x1<<8);			// START: Start generation
+void I2c_own_1::set_aknowledge(int state){
+	switch (state)
+	{ //1 enable 0 disable akcnowledge
+		case 0:
+			i2c_n->CR1 &=~ (0x1<<10);   
+		break;
+		case 1:
+			i2c_n->CR1 |= (0x1<<10);
+		break;
+	}
+	
+}
+
+void I2c_own_1::Start_i2c(void){
+i2c_n->CR1 |= (0x1<<8);			// START: Start generation
 }
 
 
 	
 void I2c_own_1::stop_i2c(void){
-	I2C1->CR1 |= (0x1<<9);			//  STOP: Stop generation
+	i2c_n->CR1 |= (0x1<<9);			//  STOP: Stop generation
 }
 
 void I2c_own_1::ev5_i2c(void){
 	//EV5: SB =1, cleared by reading SR1 register followed by writing DR register with addres
-	while(!((I2C1->SR1) & (0x1<<0)));      //Start bit (Master mode)
+	while(!((i2c_n->SR1) & (0x1<<0)));      //Start bit (Master mode)
 
 }
 void I2c_own_1::ev6_i2c(void){
 //EV6: ADDR=1,cleared by reading SR1 register followed by reading SR2
-	while(!((I2C1->SR1) & (0x1<<1)));      // ADDR: Address sent (master mode)/matched (slave mode)
+	while(!((i2c_n->SR1) & (0x1<<1)));      // ADDR: Address sent (master mode)/matched (slave mode)
 	
-	uint8_t temp = I2C1->SR1;   // read SR1 and SR2 to clear the ADDR bit
-	temp = I2C1->SR2;
+	uint8_t temp = i2c_n->SR1;   // read SR1 and SR2 to clear the ADDR bit
+	temp = i2c_n->SR2;
 }
 
 void I2c_own_1::ev8_i2c(void){
 	//TxE=1, shift register not empty, data register empty, cleared by writing DR register
-	while(!((I2C1->SR1) & (0x1<<7)));   //TxE: Data register empty (transmitters) 
+	while(!((i2c_n->SR1) & (0x1<<7)));   //TxE: Data register empty (transmitters) 
 
 	//while(!((I2C1->SR1) & (0x1<<7)));   //TxE: Data register empty (transmitters) 
 
 }
 void I2c_own_1::ev8_1_i2c(void){
 //TxE=1, shift register empty,. data register empty, write Data1 in DR.
-	while(!((I2C1->SR1) & (0x1<<7)));   //TxE: Data register empty (transmitters) 
+	while(!((i2c_n->SR1) & (0x1<<7)));   //TxE: Data register empty (transmitters) 
 
 }
 void I2c_own_1::ev8_2_i2c(void){
 //TxE=1, BTF=1, program stop request. Txe and BTF are cleared by hardware by the stop condition
 	//while(!((I2C1->SR1) & (0x1<<7)));   //TxE: Data register empty (transmitters) 
-	while(!((I2C1->SR1) & (0x1<<2)));		// BTF: Byte transfer finished
+	while(!((i2c_n->SR1) & (0x1<<2)));		// BTF: Byte transfer finished
 	
 }
 
 void I2c_own_1::ev7_i2c(void){
 	//RxNE=1 cleared by reading DR register.
-	while(!((I2C1->SR1) & (0x1<<6)));		// RxNE: Data register not empty (receivers)
+	while(!((i2c_n->SR1) & (0x1<<6)));		// RxNE: Data register not empty (receivers)
 
 }
 void I2c_own_1::ev7_1_i2c(void){
 	//RxNE=1 cleared by reading DR register, program ACK=0 and stop request.
-	while(!((I2C1->SR1) & (0x1<<6)));		// RxNE: Data register not empty (receivers)
-	I2C1->CR1 &=~ (0x1<<10);			// ACK: Acknowledge enable
+	while(!((i2c_n->SR1) & (0x1<<6)));		// RxNE: Data register not empty (receivers)
+	i2c_n->CR1 &=~ (0x1<<10);			// ACK: Acknowledge enable
 
 }
